@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">	
+		<title>Vote Counter</title>
+	</head>
+	<body>	
+		<div id="app">
+		<div class="jumbotron text-white bg-dark">
+			<div class="col-md-6 px-0">
+			  <h1 class="display-4 font-italic"><a class="text-white font-weight-bold" href="/">Vote Counter</a></h1>
+			  <p class="lead mb-0"><a href="/" class="text-white font-weight-bold">1.0.0-SNAPSHOT</a></p>
+			</div>
+		</div>
+	
+		<main role="main" class="container">
+		  <div class="jumbotron">
+			<h1>Create Survey</h1>
+			<form @submit="createSurvey">
+				<p class="lead">
+					<label>Title</label>
+					<input type="text" class="form-control" required v-model="title">
+				</p>
+				<button class="btn btn-lg btn-primary">Create</button>
+			</form>
+		  </div>
+		  
+		  <h2>Survey List</h2>
+		  
+		  <table class="table table-striped">
+			<thead>
+			  <tr>
+				<th>Id</th>
+				<th>Title</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr v-for="survey in surveyList">
+				<td>
+					<a v-bind:href="'survey-overview.html?id=' + survey.id">{{ survey.id }}</a>
+				</td>
+				
+				<td>{{ survey.title }}</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</main>
+		</div>
+	  
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+		const vm = new Vue({
+			el: '#app',
+			data() {
+				return {
+					surveyList: [],
+					title: ''
+				};
+			},
+			mounted() {
+				axios.get("http://localhost:8080/survey")
+					.then(response => {
+						this.surveyList = response.data
+					})
+			},
+			methods: {
+				createSurvey(e) {;
+					e.preventDefault();
+					let me = this;
+					axios.put('http://localhost:8080/survey', {	title: this.title	})
+					.then(function (response) {
+						me.surveyList.push(response.data);
+						me.title="";
+					})
+				}
+			}
+		});
+		</script>
+  </body>
+</html>

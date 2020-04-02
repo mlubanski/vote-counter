@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">	
+		<title>Vote Counter</title>
+	</head>
+	<body>	
+		<div id="app">
+		<div class="jumbotron text-white bg-dark">
+			<div class="col-md-6 px-0">
+			  <h1 class="display-4 font-italic"><a class="text-white font-weight-bold" href="/">Vote Counter</a></h1>
+			  <p class="lead mb-0"><a href="/" class="text-white font-weight-bold">1.0.0-SNAPSHOT</a></p>
+			</div>
+		</div>
+	
+		<main role="main" class="container">
+		  <div class="jumbotron">
+			<h1>Create Question</h1>
+			<form @submit="createQuestion">
+				<p class="lead">
+					<label>Title</label>
+					<input type="text" class="form-control" required v-model="title">
+					<label>Answer 1</label>
+					<input type="text" class="form-control" required v-model="answer1">
+					<label>Answer 2</label>
+					<input type="text" class="form-control" required v-model="answer2">
+					<label>Answer 3</label>
+					<input type="text" class="form-control" required v-model="answer3">
+				</p>
+				<button class="btn btn-lg btn-primary">Create</button>
+			</form>
+		  </div>
+		  
+		  <h2>Question List</h2>
+		  <table class="table table-striped">
+			<thead>
+			  <tr>
+				<th>Questions</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr v-for="question in questionList">
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-dark text-center">{{ question.title }}</li>
+					  	<div v-for="answer in question.answers">
+					  		<li class="list-group-item">{{ answer }}</li>
+					  	</div>
+					</ul>	
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</main>
+		</div>
+	  
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+		const vm = new Vue({
+			el: '#app',
+			data() {
+				return {
+					surveyId: '',
+					questionList: [],
+					title: '',
+					answer1: '',
+					answer2: '',
+					answer3: '',
+					answerList: []
+				};
+			},
+			mounted() {
+				//get survey id path parameter
+				let searchParams = new URLSearchParams(window.location.search);
+				this.surveyId = searchParams.get('id');
+				
+				//load all questions belonging to specific survey
+				axios.get("http://localhost:8080/survey-overview?surveyId="+ this.surveyId)
+					.then(response => {
+						this.questionList = response.data
+					})
+			},
+			methods: {
+				createQuestion(e) {;
+					e.preventDefault();
+					let me = this;
+					
+					this.answerList = [];
+					this.answerList.push(this.answer1);
+					this.answerList.push(this.answer2);
+					this.answerList.push(this.answer3);
+					
+					axios.put('http://localhost:8080/survey-overview?surveyId=' + this.surveyId, { title: this.title, answers: this.answerList	})
+					.then(function (response) {
+						me.questionList.push(response.data);
+						me.title="";
+						me.answer1="";
+						me.answer2="";
+						me.answer3="";
+					})
+				}
+			}
+		});
+		</script>
+  </body>
+</html>
