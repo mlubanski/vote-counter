@@ -6,7 +6,7 @@ phases:
       - gradle --version
       - gradle build
 reports:
-  jUnit:
+  jUnit_$CODEBUILD_SOURCE_VERSION:
     files:
       - '**/*'
     base-directory: 'build/test-results'
