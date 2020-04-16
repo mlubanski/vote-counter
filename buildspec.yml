@@ -6,7 +6,10 @@ phases:
       - gradle --version
       - gradle build
 reports:
-  jUnit_$CODEBUILD_SOURCE_VERSION:
+  jUnit:
     files:
       - '**/*'
     base-directory: 'build/test-results'
+artifacts:
+  files:
+    - build/libs/vote-counter-*.jar
