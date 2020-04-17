@@ -13,3 +13,6 @@ reports:
 artifacts:
   files:
     - build/libs/vote-counter-*.jar
+    - appspec.yml
+    - application-start.sh
+    - application-stop.sh
