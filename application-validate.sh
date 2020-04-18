@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#echo "Waiting for 15 seconds before checking health.."
-#sleep 15
+echo "Waiting for 15 seconds before checking health.."
+sleep 15
 
 status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:8080)
 if [[ "$status_code" -ne 200 ]] ; then
