@@ -1,10 +1,11 @@
 version: 0.0
 os: linux
 files:
-  - source: /build/libs/vote-counter-1.0.0-SNAPSHOT.jar
+  - source: build/libs
     destination: /opt
 hooks:
-  - ApplicationStop:
+  ApplicationStop:
     - location: application-stop.sh
-  - ApplicationStart:
+  ApplicationStart:
     - location: application-start.sh
+      timeout: 15
