@@ -6,5 +6,5 @@ sudo pkill java
 
 echo "removing app fat jar from /opt"
 sudo ls -la /opt/
-sudo rm -f /opt/*.jar
+sudo rm -f /opt/*.jar || true
 exit 0
