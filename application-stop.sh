@@ -2,9 +2,9 @@
 
 echo "stopping all java processes"
 ps aux | grep java
-pkill java
+sudo pkill java
 
 echo "removing app fat jar from /opt"
-ls -la /opt/
-rm -f /opt/*.jar
+sudo ls -la /opt/
+sudo rm -f /opt/*.jar
 exit 0
