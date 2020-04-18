@@ -16,3 +16,4 @@ artifacts:
     - appspec.yml
     - application-start.sh
     - application-stop.sh
+    - application-validate.sh

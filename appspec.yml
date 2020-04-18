@@ -9,3 +9,5 @@ hooks:
   ApplicationStart:
     - location: application-start.sh
       timeout: 15
+  ValidateService:
+    - location: application-validate.sh
