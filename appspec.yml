@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: build/libs/vote-counter-*.jar \
+  - source: /build/libs/vote-counter-1.0.0-SNAPSHOT.jar
     destination: /opt
 hooks:
   - ApplicationStop:
