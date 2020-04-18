@@ -14,5 +14,5 @@ permissions:
 hooks:
   - ApplicationStop:
     - location: application-stop.sh
-# - ApplicationStart:
-#     - location: application-start.sh
+ - ApplicationStart:
+     - location: application-start.sh
