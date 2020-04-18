@@ -11,4 +11,3 @@ hooks:
   ValidateService:
     - location: application-validate.sh
       timeout: 20
-broken file!!!!!!!!!!!!!!!!!!!1
