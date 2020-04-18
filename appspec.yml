@@ -1,10 +1,8 @@
 version: 0.0
 os: linux
-
 files:
   - source: build/libs/vote-counter-*.jar
     destination: /opt
-
 permissions:
   - object: /opt
     pattern: "*.jar"
@@ -13,9 +11,8 @@ permissions:
     mode: 755
     type:
       - file
-
 hooks:
- - ApplicationStop:
-     - location: application-stop.sh
- - ApplicationStart:
-     - location: application-start.sh
+  - ApplicationStop:
+    - location: application-stop.sh
+# - ApplicationStart:
+#     - location: application-start.sh
